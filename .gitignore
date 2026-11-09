@@ -1,0 +1,31 @@
+# Python and editor state
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+
+# Generated builds and tool payloads
+/build/
+/dist/
+/vendor/*.exe
+/vendor/SHA256SUMS.json
+/tools.zip
+/tools-manifest.json
+/standalone-verification.json
+
+# Local downloads, diagnostics, and credentials
+/test_downloads/
+/downloads/
+*.log
+.env
+.env.*
+!.env.example
+cookies*.txt
+*.cookies
+*.pem
+*.key
+Thumbs.db
+.DS_Store

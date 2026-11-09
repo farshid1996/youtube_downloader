@@ -1,0 +1,47 @@
+name: Native Linux and macOS apps
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: linux-x64
+          - os: macos-15
+            target: macos-arm64
+          - os: macos-15-intel
+            target: macos-x64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Linux desktop dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-venv libegl1 libopengl0 libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libxcb-randr0 libxcb-render-util0 xvfb xauth
+      - name: Build native standalone app
+        run: bash portable/build.sh
+      - name: Test native adapter and existing download behavior
+        run: bash portable/check.sh
+      - name: Verify Linux package
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python3 portable/verify.py dist/${{ matrix.target }}/YouTubeDownloader
+      - name: Verify macOS package
+        if: runner.os == 'macOS'
+        run: python3 portable/verify.py dist/${{ matrix.target }}/YouTubeDownloader.app/Contents/MacOS/YouTubeDownloader
+      - uses: actions/upload-artifact@v4
+        with:
+          name: YouTubeDownloader-${{ matrix.target }}
+          if-no-files-found: error
+          path: |
+            dist/${{ matrix.target }}/*.tar.gz
+            dist/${{ matrix.target }}/*.zip
+            dist/${{ matrix.target }}/*.dmg
+            dist/${{ matrix.target }}/**/native-verification.json

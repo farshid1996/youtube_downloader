@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+downloads/
+payload/
+wheels/
+*.log
+original-hashes.json
