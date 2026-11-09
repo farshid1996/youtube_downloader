@@ -4,6 +4,10 @@ A desktop video and audio downloader built with Python, PySide6, and yt-dlp. Man
 
 ![YouTube Downloader Studio download options and batch queue](bulk-actions-preview.png)
 
+## Download
+
+Get packaged builds from [GitHub Releases](https://github.com/farshid1996/youtube_downloader/releases/latest). Choose the Windows x64 executable or Linux x64 archive, and use the accompanying `SHA256SUMS.txt` to verify your download. Platform requirements and verification details are listed in each release. For macOS, follow the [native build instructions](portable/README.md).
+
 ## Highlights
 
 - **Video and audio:** MP4 and MKV video; MP3, M4A, FLAC, and WAV audio. Choose the best available video or a resolution ceiling from 360p to 2160p.
