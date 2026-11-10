@@ -6,7 +6,44 @@ A desktop video and audio downloader built with Python, PySide6, and yt-dlp. Man
 
 ## Download
 
-Get packaged builds from [GitHub Releases](https://github.com/farshid1996/youtube_downloader/releases/latest). Choose the Windows x64 executable or Linux x64 archive, and use the accompanying `SHA256SUMS.txt` to verify your download. Platform requirements and verification details are listed in each release. For macOS, follow the [native build instructions](portable/README.md).
+**[Download the latest release](https://github.com/farshid1996/youtube_downloader/releases/latest)** — packaged builds include Python, Qt, yt-dlp, Deno, FFmpeg, and FFprobe. No separate Python or download-tool installation is needed.
+
+### v1.0.0 downloads
+
+| Platform | Download | Requirements |
+| --- | --- | --- |
+| Windows x64 | [Standalone executable](https://github.com/farshid1996/youtube_downloader/releases/download/v1.0.0/YouTubeDownloader-v1.0.0-windows-x64.exe) · 251 MB | Windows 10/11, 64-bit |
+| Linux x64 | [Compressed archive](https://github.com/farshid1996/youtube_downloader/releases/download/v1.0.0/YouTubeDownloader-v1.0.0-linux-x64.tar.gz) · 199 MB | glibc 2.39+ and compatible desktop graphics libraries; built on Ubuntu 24.04 |
+| macOS | [Build from source](portable/README.md) | Native Apple Silicon or Intel build environment; no prebuilt macOS app in v1.0.0 |
+
+**Windows:** download and run the executable. On first launch, it extracts its runtime and download tools into per-user storage; allow time and disk space for extraction.
+
+**Linux:** extract the archive in a dedicated folder, then launch the executable:
+
+```sh
+mkdir -p YouTubeDownloader-v1.0.0
+tar -xzf YouTubeDownloader-v1.0.0-linux-x64.tar.gz -C YouTubeDownloader-v1.0.0
+cd YouTubeDownloader-v1.0.0
+./YouTubeDownloader
+```
+
+These builds are unsigned. Linux packaging was verified under Ubuntu 24.04 in WSL2 with Xvfb; compatibility with every desktop distribution has not been tested. See the [release notes and verification reports](https://github.com/farshid1996/youtube_downloader/releases/tag/v1.0.0) for details.
+
+### Verify your download
+
+Download [SHA256SUMS.txt](https://github.com/farshid1996/youtube_downloader/releases/download/v1.0.0/SHA256SUMS.txt), calculate the hash, and compare it with the matching filename in that file.
+
+Windows PowerShell:
+
+```powershell
+Get-FileHash .\YouTubeDownloader-v1.0.0-windows-x64.exe -Algorithm SHA256
+```
+
+Linux:
+
+```sh
+sha256sum YouTubeDownloader-v1.0.0-linux-x64.tar.gz
+```
 
 ## Highlights
 
@@ -29,7 +66,7 @@ Get packaged builds from [GitHub Releases](https://github.com/farshid1996/youtub
 
 Linux and macOS use a native adapter around the shared GUI. See [native platform documentation](portable/README.md) for dependencies, architecture details, verification, and distribution limitations. Availability of a build script does not imply that every platform has been validated.
 
-## Get started on Windows
+## Run from source on Windows
 
 This repository contains source code and build scripts. Generated executables and third-party runtime binaries are excluded from Git; the paths below are local build outputs, not preinstalled files.
 
