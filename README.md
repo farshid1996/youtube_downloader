@@ -2,7 +2,7 @@
 
 A desktop video and audio downloader built with Python, PySide6, and yt-dlp. Manage a persistent download queue, choose formats and quality per job, and package the app with its download tools for standalone use.
 
-![YouTube Downloader Studio download options and batch queue](bulk-actions-preview.png)
+![YouTube Downloader Studio running on native Windows with readable fonts](docs/images/simple-workspace.png)
 
 ## Download
 
@@ -92,7 +92,7 @@ The helper downloads yt-dlp and Deno from their official GitHub releases and cop
 
 ## Visual walkthrough
 
-Screenshots below are captured from the current application, not concept mockups. Some features depend on the media source and available codecs.
+All screenshots below were captured directly from the running **Windows desktop application using native Qt rendering** (not offscreen mode or generated mockups). Text, labels, and controls are rendered using the system's real Segoe UI font. For safety, example URLs and queue entries are illustrative; no media was downloaded for these screenshots. Some features depend on the media source and available codecs.
 
 ### 1. Start in Simple workspace
 
@@ -112,6 +112,14 @@ Use a complete HTTP(S) URL on each line. Inspect to review metadata where the so
 
 Advanced settings include performance, network and media-processing controls. **Maximum speed** favors concurrency while **Maximum reliability** reduces aggressiveness and increases retries. Use conservative settings on rate-limited sites or unstable connections.
 
+**Subtitles and extras:** download or embed subtitles, thumbnails, metadata, descriptions and other supported details.
+
+![Actual Subtitles and extras tab in the Windows app](docs/images/subtitles-extras.png)
+
+**Network and privacy:** customize IP preference, optional proxy configuration and explicitly selected browser/cookie settings.
+
+![Actual Network and privacy tab in the Windows app](docs/images/network-privacy.png)
+
 ### 4. Customize Professional options
 
 ![Professional workspace custom downloader options](docs/images/professional-workspace.png)
@@ -120,25 +128,25 @@ Professional mode exposes additional yt-dlp features such as custom format selec
 
 ### 5. Manage the queue and downloads
 
-![Download queue and batch actions](bulk-actions-preview.png)
+![Real app download queue with sample job states](docs/images/queue-controls.png)
 
 Select one or more jobs to pause, resume, retry or cancel. The **Select** and **Remove from queue** menus support bulk actions and status filters. Queue deletion retains downloaded media; pause/resume keeps partial files where the site supports continuation.
 
-![Menu actions for download jobs](ui-menu-preview.png)
+![Actual context menu opened from a queue row](docs/images/job-actions-menu.png)
 
 Right-click an entry for its available file, folder, URL, retry and queue actions. Failed entries can be retried without touching successful ones.
 
 ### 6. Monitor transfer progress
 
-![Per-download progress tracking](progress-preview.png)
+![Actual Qt queue progress bars showing illustrative paused and queued entries](docs/images/progress-queue.png)
 
-The queue displays progress and download state. Media merges, subtitle processing and audio conversion may continue after the network transfer completes. A progress indicator alone does not mean a file is ready.
+The queue displays progress and download state (illustrative entries appear in the screenshot; no download was started to capture it). Media merges, subtitle processing and audio conversion may continue after the network transfer completes. A progress indicator alone does not mean a file is ready.
 
 ### 7. Run the system checker
 
 Use **System check** from the desktop app to inspect required media tools, storage permissions, free space and runtime compatibility. In a standalone Windows build, required tools are bundled; a separate Python installation is unnecessary. Use **Copy details** for a redacted support report and review it before sharing.
 
-![Options and settings overview](ui-options-preview.png)
+![Real System compatibility dialog showing locally detected readiness checks](docs/images/system-check.png)
 
 ### 8. Choose the right download profile
 
@@ -150,6 +158,10 @@ Use **System check** from the desktop app to inspect required media tools, stora
 | Fast downloads | Maximum speed | Higher concurrency is not always faster |
 | Audio files | MP3/M4A/FLAC/WAV | Re-encoding does not improve source fidelity |
 | Filtered archives | Professional + date/size filters | Test selectors on one item first |
+
+### Regenerate screenshots (maintainers)
+
+Run `.\.venv\Scripts\python.exe scripts\capture_readme_screenshots.py` in a **native Windows desktop session** with project dependencies installed. The script checks for Windows Qt and Segoe UI before generating screenshots, uses isolated application data, and displays clearly labeled sample queue entries without downloading anything. Avoid `QT_QPA_PLATFORM=offscreen`: it previously created the unreadable square characters seen in older documentation images.
 
 ## Using the app
 
