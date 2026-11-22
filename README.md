@@ -2,7 +2,7 @@
 
 A desktop video and audio downloader built with Python, PySide6, and yt-dlp. Manage a persistent download queue, choose formats and quality per job, and package the app with its download tools for standalone use.
 
-![YouTube Downloader Studio running on native Windows with readable fonts](docs/images/simple-workspace.png)
+![YouTube Downloader Studio running on native Windows with readable fonts](docs/screenshots/windows-native-20261122-v2/01-native-simple-workspace.png)
 
 ## Download
 
@@ -92,53 +92,55 @@ The helper downloads yt-dlp and Deno from their official GitHub releases and cop
 
 ## Visual walkthrough
 
+Click any screenshot to view it at its full native resolution. These files use unique versioned paths to avoid reusing stale cached images.
+
 All screenshots below were captured directly from the running **Windows desktop application using native Qt rendering** (not offscreen mode or generated mockups). Text, labels, and controls are rendered using the system's real Segoe UI font. For safety, example URLs and queue entries are illustrative; no media was downloaded for these screenshots. Some features depend on the media source and available codecs.
 
 ### 1. Start in Simple workspace
 
-![Simple workspace with essential settings, URL input and queue](docs/images/simple-workspace.png)
+![Simple workspace with essential settings, URL input and queue](docs/screenshots/windows-native-20261122-v2/01-native-simple-workspace.png)
 
 Paste one or more authorized media URLs, select MP4 or an audio format, choose a quality and destination, then choose **Inspect video**, **Download now**, or **Add to queue**. If the source offers less than the selected quality, the app cannot invent missing resolution.
 
 ### 2. Add links and inspect before downloading
 
-![Paste URLs into the downloader](docs/images/paste-links.png)
+![Paste URLs into the downloader](docs/screenshots/windows-native-20261122-v2/02-native-enter-links.png)
 
 Use a complete HTTP(S) URL on each line. Inspect to review metadata where the source makes it available. You can stage work in the persistent queue before starting; successful downloads go to your chosen destination, not inside the application folder.
 
 ### 3. Explore Advanced controls
 
-![Advanced workspace settings](docs/images/advanced-workspace.png)
+![Advanced workspace settings](docs/screenshots/windows-native-20261122-v2/03-native-advanced-performance.png)
 
 Advanced settings include performance, network and media-processing controls. **Maximum speed** favors concurrency while **Maximum reliability** reduces aggressiveness and increases retries. Use conservative settings on rate-limited sites or unstable connections.
 
 **Subtitles and extras:** download or embed subtitles, thumbnails, metadata, descriptions and other supported details.
 
-![Actual Subtitles and extras tab in the Windows app](docs/images/subtitles-extras.png)
+![Actual Subtitles and extras tab in the Windows app](docs/screenshots/windows-native-20261122-v2/04-native-subtitles-and-extras.png)
 
 **Network and privacy:** customize IP preference, optional proxy configuration and explicitly selected browser/cookie settings.
 
-![Actual Network and privacy tab in the Windows app](docs/images/network-privacy.png)
+![Actual Network and privacy tab in the Windows app](docs/screenshots/windows-native-20261122-v2/05-native-network-and-privacy.png)
 
 ### 4. Customize Professional options
 
-![Professional workspace custom downloader options](docs/images/professional-workspace.png)
+![Professional workspace custom downloader options](docs/screenshots/windows-native-20261122-v2/06-native-professional-options.png)
 
 Professional mode exposes additional yt-dlp features such as custom format selection, output templates, upload-date and file-size filters. Invalid dates, unsupported format expressions and unsafe output paths may cause jobs to fail; test one URL before large batches.
 
 ### 5. Manage the queue and downloads
 
-![Real app download queue with sample job states](docs/images/queue-controls.png)
+![Real app download queue with sample job states](docs/screenshots/windows-native-20261122-v2/07-native-queue-and-batch-actions.png)
 
 Select one or more jobs to pause, resume, retry or cancel. The **Select** and **Remove from queue** menus support bulk actions and status filters. Queue deletion retains downloaded media; pause/resume keeps partial files where the site supports continuation.
 
-![Actual context menu opened from a queue row](docs/images/job-actions-menu.png)
+![Actual context menu opened from a queue row](docs/screenshots/windows-native-20261122-v2/08-native-queue-context-menu.png)
 
 Right-click an entry for its available file, folder, URL, retry and queue actions. Failed entries can be retried without touching successful ones.
 
 ### 6. Monitor transfer progress
 
-![Actual Qt queue progress bars showing illustrative paused and queued entries](docs/images/progress-queue.png)
+![Actual Qt queue progress bars showing illustrative paused and queued entries](docs/screenshots/windows-native-20261122-v2/09-native-download-progress.png)
 
 The queue displays progress and download state (illustrative entries appear in the screenshot; no download was started to capture it). Media merges, subtitle processing and audio conversion may continue after the network transfer completes. A progress indicator alone does not mean a file is ready.
 
@@ -146,7 +148,7 @@ The queue displays progress and download state (illustrative entries appear in t
 
 Use **System check** from the desktop app to inspect required media tools, storage permissions, free space and runtime compatibility. In a standalone Windows build, required tools are bundled; a separate Python installation is unnecessary. Use **Copy details** for a redacted support report and review it before sharing.
 
-![Real System compatibility dialog showing locally detected readiness checks](docs/images/system-check.png)
+![Real System compatibility dialog showing locally detected readiness checks](docs/screenshots/windows-native-20261122-v2/10-native-system-compatibility.png)
 
 ### 8. Choose the right download profile
 

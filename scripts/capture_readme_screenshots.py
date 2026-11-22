@@ -31,7 +31,7 @@ print("NATIVE PLATFORM:", app.platformName(), "AVAILABLE FONTS:", len(families),
 
 app.setStyle("Fusion")
 app.setStyleSheet(main.STYLE)
-output = ROOT / "docs" / "images"
+output = ROOT / "docs" / "screenshots" / "windows-native-20261122-v2"
 output.mkdir(parents=True, exist_ok=True)
 def capture(widget, filename):
     app.processEvents()
@@ -56,12 +56,12 @@ with tempfile.TemporaryDirectory(prefix="youtube-studio-documentation-") as isol
     app.processEvents()
     scroll = w.page_scroll.verticalScrollBar()
     scroll.setValue(0)
-    capture(w, "simple-workspace.png")
+    capture(w, "01-native-simple-workspace.png")
 
     w.links.setPlainText("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
     w.preview.setText("Example URL entered. Choose Inspect video to check available formats.")
     scroll.setValue(0)
-    capture(w, "paste-links.png")
+    capture(w, "02-native-enter-links.png")
     w.links.clear()
     w.preview.setText("Ready when you are. Paste a link to inspect or download.")
 
@@ -71,18 +71,18 @@ with tempfile.TemporaryDirectory(prefix="youtube-studio-documentation-") as isol
     app.processEvents()
     settings_y = w.tabs.mapTo(w.page_scroll.widget(), QPoint()).y()
     scroll.setValue(max(0, settings_y - 135))
-    capture(w.tabs.parentWidget(), "advanced-workspace.png")
+    capture(w.tabs.parentWidget(), "03-native-advanced-performance.png")
     w.tabs.setCurrentIndex(2)
-    capture(w.tabs.parentWidget(), "subtitles-extras.png")
+    capture(w.tabs.parentWidget(), "04-native-subtitles-and-extras.png")
     w.tabs.setCurrentIndex(3)
-    capture(w.tabs.parentWidget(), "network-privacy.png")
+    capture(w.tabs.parentWidget(), "05-native-network-and-privacy.png")
 
     w.experience_combo.setCurrentText("Professional")
     w.tabs.setCurrentIndex(4)  # Professional yt-dlp options.
     app.processEvents()
     settings_y = w.tabs.mapTo(w.page_scroll.widget(), QPoint()).y()
     scroll.setValue(max(0, settings_y - 135))
-    capture(w.tabs.parentWidget(), "professional-workspace.png")
+    capture(w.tabs.parentWidget(), "06-native-professional-options.png")
 
     # Populate the REAL queue widget with explicitly labeled illustrative rows.
     # No jobs are started and no media is downloaded.
@@ -101,14 +101,14 @@ with tempfile.TemporaryDirectory(prefix="youtube-studio-documentation-") as isol
     app.processEvents()
     table_y = w.table.mapTo(w.page_scroll.widget(), QPoint()).y()
     scroll.setValue(max(0, table_y - 235))
-    capture(w.table.parentWidget(), "queue-controls.png")
+    capture(w.table.parentWidget(), "07-native-queue-and-batch-actions.png")
     w.table.selectRow(0)
     app.processEvents()
-    capture(w.table, "progress-queue.png")
+    capture(w.table, "09-native-download-progress.png")
     menu = w.job_menu([w.jobs[0]])
     menu.show()
     app.processEvents()
-    capture(menu, "job-actions-menu.png")
+    capture(menu, "08-native-queue-context-menu.png")
     menu.close()
     menu.deleteLater()
     w.close()
@@ -123,7 +123,7 @@ with tempfile.TemporaryDirectory(prefix="youtube-studio-documentation-") as isol
     dialog = main.SystemCheckDialog(results, report)
     dialog.show()
     app.processEvents()
-    capture(dialog, "system-check.png")
+    capture(dialog, "10-native-system-compatibility.png")
     dialog.close()
 
 print("SCREENSHOT CAPTURE COMPLETE.", flush=True)
