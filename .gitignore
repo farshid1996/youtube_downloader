@@ -10,6 +10,7 @@ __pycache__/
 # Generated builds and tool payloads
 /build/
 /dist/
+/audit_sources/
 /vendor/*.exe
 /vendor/SHA256SUMS.json
 /tools.zip

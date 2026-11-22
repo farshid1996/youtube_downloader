@@ -3,7 +3,7 @@ Set-Location $PSScriptRoot
 $isolatedRoot = Join-Path $env:TEMP ('YouTubeDownloader-standalone-' + [guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $isolatedRoot | Out-Null
 $isolatedExe = Join-Path $isolatedRoot 'YouTubeDownloader.exe'
-Copy-Item -LiteralPath '.\dist\single\YouTubeDownloader.exe' -Destination $isolatedExe
+Copy-Item -LiteralPath '.\dist\YouTubeDownloader-Studio.exe' -Destination $isolatedExe
 $previousLocalAppData = $env:LOCALAPPDATA
 $previousPath = $env:PATH
 try {
