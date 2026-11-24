@@ -8,19 +8,27 @@ A desktop video and audio downloader built with Python, PySide6, and yt-dlp. Man
 
 **[Download the latest release](https://github.com/farshid1996/youtube_downloader/releases/latest)** — packaged builds include Python, Qt, yt-dlp, Deno, FFmpeg, and FFprobe. No separate Python or download-tool installation is needed.
 
-### Current Windows release: v1.1.0
+### Current desktop release: v1.1.0
 
 | Platform | Download | Status |
 | --- | --- | --- |
 | Windows 10/11 x64 | [Standalone Studio EXE](https://github.com/farshid1996/youtube_downloader/releases/download/v1.1.0/YouTubeDownloader-Studio-v1.1.0-windows-x64.exe) | Current v1.1.0 |
-| Linux x64 | [Historical v1.0.0 package](https://github.com/farshid1996/youtube_downloader/releases/tag/v1.0.0) | Older version; not the current Studio build |
+| Linux x64 | [Standalone Studio tar.gz](https://github.com/farshid1996/youtube_downloader/releases/download/v1.1.0/YouTubeDownloader-Studio-v1.1.0-linux-x64.tar.gz) | Current v1.1.0; Ubuntu 24.04 / glibc 2.39 baseline |
 | macOS | [Build from source](portable/README.md) | No prebuilt v1.1.0 release |
 
 **Windows:** download the executable, verify its SHA-256 against the release checksum file, then run it. Python, Qt, yt-dlp, Deno, FFmpeg and FFprobe are bundled. Allow time and space for first-run extraction. The app is unsigned and may trigger an OS reputation warning.
 
 **Verify:** Run PowerShell Get-FileHash on the downloaded EXE using -Algorithm SHA256 and compare with [SHA256SUMS.txt](https://github.com/farshid1996/youtube_downloader/releases/download/v1.1.0/SHA256SUMS.txt). See the release verification report and third-party notices before redistribution.
 
-The latest Linux and macOS versions must be built and tested separately using [portable/README.md](portable/README.md).
+**Linux (including WSLg):** download the Linux archive and [Linux SHA-256 checksum](https://github.com/farshid1996/youtube_downloader/releases/download/v1.1.0/SHA256SUMS-linux.txt) into the same directory. On a compatible 64-bit Linux desktop or WSL Ubuntu 24.04, run:
+
+```sh
+sha256sum -c SHA256SUMS-linux.txt
+tar -xzf YouTubeDownloader-Studio-v1.1.0-linux-x64.tar.gz
+./YouTubeDownloader
+```
+
+The executable includes Python, Qt and all four download tools. It requires compatible system graphics libraries and a graphical session (WSLg for WSL). See [native platform instructions](portable/README.md) for dependencies. The Linux package passed 32 applicable automated tests and packaged GUI/local-media verification; see [Linux verification report](https://github.com/farshid1996/youtube_downloader/releases/download/v1.1.0/linux-verification.json). Other distributions and real YouTube access were not tested. macOS remains a source-build option.
 
 ## Highlights
 
