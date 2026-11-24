@@ -1,0 +1,68 @@
+name: Publish verified Linux release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag (e.g. v1.1.0)
+        required: true
+        default: v1.1.0
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: linux-release-${{ inputs.tag }}
+  cancel-in-progress: false
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check release target
+        shell: bash
+        run: |
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit 1
+          gh release view "$TAG" --json isDraft --jq '.isDraft' | grep -qx false
+      - name: Linux desktop dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-venv libegl1 libopengl0 libxcb-cursor0 libxkbcommon-x11-0 libxcb-icccm4 libxcb-keysyms1 libxcb-shape0 libxcb-xinerama0 libxcb-randr0 libxcb-render-util0 xvfb xauth
+      - name: Build and test native standalone app
+        run: |
+          bash portable/build.sh
+          bash portable/check.sh
+          xvfb-run -a python3 portable/verify.py dist/linux-x64/YouTubeDownloader
+      - name: Prepare verified release archive
+        shell: bash
+        run: |
+          cd dist/linux-x64
+          name="YouTubeDownloader-Studio-${TAG}-linux-x64.tar.gz"
+          mv YouTubeDownloader-linux.tar.gz "$name"
+          cp native-verification.json linux-verification.json
+          sha256sum "$name" > SHA256SUMS-linux.txt
+          sha256sum -c SHA256SUMS-linux.txt
+          tar -tzf "$name"
+      - name: Publish Linux assets without replacing Windows assets
+        shell: bash
+        run: |
+          cd dist/linux-x64
+          name="YouTubeDownloader-Studio-${TAG}-linux-x64.tar.gz"
+          gh release upload "$TAG" "$name" SHA256SUMS-linux.txt linux-verification.json
+          gh release view "$TAG" --json assets --jq '.assets[] | [.name,.size] | @tsv'
+          gh release view "$TAG" --json body --jq '.body' > release-body.md
+          if ! grep -q '^## Linux x86-64' release-body.md; then
+            python3 - <<'PY'
+          from pathlib import Path
+          p=Path('release-body.md')
+          s=p.read_text().replace('Linux and macOS are not rebuilt for v1.1.0; v1.0.0 Linux package remains available as historical release.', 'macOS has not been rebuilt for v1.1.0. The v1.0.0 Linux package remains available as a historical release.')
+          p.write_text(s)
+          PY
+            printf '\n\n## Linux x86-64\n\nStandalone Linux Studio build for Ubuntu 24.04 / glibc 2.39 and compatible desktops or WSLg. Python, Qt and downloader tools are bundled. Native regression, GUI smoke and synthetic local-media download checks passed. Verify the archive using SHA256SUMS-linux.txt. Packaging source commit: %s. Existing Windows assets are unchanged. Other Linux distributions and live YouTube access were not tested.\n' "$GITHUB_SHA" >> release-body.md
+            gh release edit "$TAG" --notes-file release-body.md
+          fi
