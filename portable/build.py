@@ -53,6 +53,10 @@ def build():
         with tarfile.open(output/'YouTubeDownloader-linux.tar.gz','w:gz') as archive:
             archive.add(output/'YouTubeDownloader',arcname='YouTubeDownloader')
             archive.add(HERE/'README.md',arcname='README.md')
+            # Make bundled dependency notices and source provenance accessible
+            # without having to extract the PyInstaller executable.
+            for name in ('THIRD_PARTY_NOTICES.txt', 'native-sources.json', 'native-licenses'):
+                archive.add(payload/name, arcname=name)
         print('Created '+str(output/'YouTubeDownloader'))
 
 if __name__=='__main__':

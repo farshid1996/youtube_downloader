@@ -26,6 +26,12 @@ PAYLOAD = Path(sys._MEIPASS) if getattr(sys, 'frozen', False) else Path(__file__
 
 
 def tool(name):
+    # Match the Windows loader's in-process extraction serialization.
+    with engine._TOOL_LOCK:
+        return _tool_unlocked(name)
+
+
+def _tool_unlocked(name):
     if name not in engine.TOOL_NAMES:
         raise ValueError('Unknown bundled tool: '+name)
     try:

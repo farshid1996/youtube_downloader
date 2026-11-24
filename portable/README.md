@@ -45,8 +45,8 @@ For CI GUI verification, also install xvfb and xauth.
 ## Verify
 
 Run `bash portable/check.sh` for the native adapter tests and the existing GUI,
-queue and local-download regression suite. The Windows-specific loader test is
-excluded because the native launcher replaces that loader.
+queue and local-download regression suite. Two Windows-specific loader tests are excluded because the native launcher
+replaces that loader. Equivalent native repair and concurrent extraction are tested.
 
 Run `python3 portable/verify.py path/to/executable`. For macOS pass
 `dist/macos-arm64/YouTubeDownloader.app/Contents/MacOS/YouTubeDownloader`.

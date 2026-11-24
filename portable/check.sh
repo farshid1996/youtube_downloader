@@ -13,6 +13,7 @@ with tempfile.TemporaryDirectory() as directory:
     sys.path.insert(0,'portable')
     import launcher
     import pytest
-    # The excluded test specifically exercises the unchanged Windows tool loader.
-    raise SystemExit(pytest.main(['tests','-q','-k','not single_file_tools_repair_and_updates']))
+    # Both excluded tests exercise the Windows .exe payload; equivalent repair and
+    # concurrent extraction checks run in portable/test_native.py.
+    raise SystemExit(pytest.main(['tests','-q','-k','not single_file_tools_repair_and_updates and not parallel_first_run_tool_extraction_is_serialized']))
 PY

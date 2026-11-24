@@ -29,6 +29,11 @@ def test_native_tool_repair_and_permissions(native,tmp_path,monkeypatch):
     with zipfile.ZipFile(payload/'native-tools.zip','w') as archive:
         for name in manifest:archive.writestr(name,content)
     monkeypatch.setattr(native,'PAYLOAD',payload)
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        paths = list(pool.map(native.tool, ['ffmpeg'] * 24))
+    assert len(set(paths)) == 1
+    assert all(Path(path).read_bytes() == content for path in paths)
     target=Path(native.tool('ffmpeg'))
     assert os.access(target,os.X_OK) and target.read_bytes()==content
     target.chmod(0o600)
